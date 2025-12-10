@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Upload</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h2>Upload File</h2>
+
+<form id="uploadForm">
+  <input type="file" required />
+  <select>
+    <option value="public">Public</option>
+    <option value="private">Private</option>
+  </select>
+  <button>Upload</button>
+</form>
+
+<hr>
+
+<a href="myfiles.html">My Files</a> |
+<a href="downloads.html">Public Downloads</a> |
+<a href="#" onclick="logout()">Logout</a>
+
+<script>
+const API = 'http://localhost:4000/api';
+
+function logout() {
+  localStorage.removeItem('token');
+  window.location.href = 'login.html';
+}
+
+document.getElementById('uploadForm').onsubmit = async e => {
+  e.preventDefault();
+
+  const file = e.target[0].files[0];
+  const privacy = e.target[1].value;
+
+  const fd = new FormData();
+  fd.append('file', file);
+  fd.append('privacy', privacy);
+
+  const res = await fetch(`${API}/upload`, {
+    method: 'POST',
+    headers: {
+      Authorization: 'Bearer ' + localStorage.getItem('token')
+    },
+    body: fd
+  });
+
+  const data = await res.json();
+  alert(data.message || data.error);
+};
+</script>
+
+</body>
+</html>

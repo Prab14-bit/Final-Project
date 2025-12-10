@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Register</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h2>Register</h2>
+
+<form id="registerForm">
+  <input placeholder="Username" required />
+  <input type="email" placeholder="Email" required />
+  <input type="password" placeholder="Password" required />
+  <button>Register</button>
+</form>
+
+<a href="login.html">Back to Login</a>
+
+<script>
+const API = 'http://localhost:4000/api';
+
+document.getElementById('registerForm').onsubmit = async e => {
+  e.preventDefault();
+  const inputs = e.target.querySelectorAll('input');
+
+  const res = await fetch(`${API}/register`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      username: inputs[0].value,
+      email: inputs[1].value,
+      password: inputs[2].value
+    })
+  });
+
+  const data = await res.json();
+  alert(data.message || data.error);
+  if (data.message) window.location.href = 'login.html';
+};
+</script>
+
+</body>
+</html>
