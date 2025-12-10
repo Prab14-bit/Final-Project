@@ -1,9 +1,7 @@
 {
   "name": "secure-file-sharing-backend",
   "version": "1.0.0",
-  "description": "Secure file upload and sharing backend",
   "main": "server.js",
-  "type": "commonjs",
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js"
