@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Files</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h2>My Files</h2>
+
+<div id="files"></div>
+
+<a href="upload.html">Back</a>
+
+<script>
+const API = 'http://localhost:4000/api';
+
+fetch(`${API}/my-files`, {
+  headers: {
+    Authorization: 'Bearer ' + localStorage.getItem('token')
+  }
+})
+.then(res => res.json())
+.then(files => {
+  document.getElementById('files').innerHTML = files.map(f => `
+    <div>
+      ${f.originalName} (${f.privacy})
+    </div>
+  `).join('');
+});
+</script>
+
+</body>
+</html>
