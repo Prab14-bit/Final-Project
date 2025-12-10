@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Downloads</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h2>Public Files</h2>
+
+<div id="files"></div>
+
+<a href="upload.html">Back</a>
+
+<script>
+const API = 'http://localhost:4000/api';
+
+fetch(`${API}/public-files`)
+.then(res => res.json())
+.then(files => {
+  document.getElementById('files').innerHTML = files.map(f => `
+    <div>
+      ${f.originalName}
+    </div>
+  `).join('');
+});
+</script>
+
+</body>
+</html>
