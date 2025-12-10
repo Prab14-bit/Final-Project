@@ -15,6 +15,9 @@ mongoose
 
 const authRoutes = require('./routes/auth');
 app.use('/api', authRoutes);
+const fileRoutes = require('./routes/files');
+app.use('/api', fileRoutes);
+
 
 app.get('/', (req, res) => {
   res.send('Backend running');

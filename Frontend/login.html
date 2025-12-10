@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h2>Login</h2>
+
+<form id="loginForm">
+  <input type="email" placeholder="Email" required />
+  <input type="password" placeholder="Password" required />
+  <button>Login</button>
+</form>
+
+<a href="register.html">Create account</a>
+
+<script>
+const API = 'http://localhost:4000/api';
+
+document.getElementById('loginForm').onsubmit = async e => {
+  e.preventDefault();
+  const [email, password] = e.target.querySelectorAll('input');
+
+  const res = await fetch(`${API}/login`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      email: email.value,
+      password: password.value
+    })
+  });
+
+  const data = await res.json();
+  if (data.token) {
+    localStorage.setItem('token', data.token);
+    window.location.href = 'upload.html';
+  } else {
+    alert(data.error);
+  }
+};
+</script>
+
+</body>
+</html>
